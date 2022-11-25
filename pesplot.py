@@ -18,10 +18,10 @@ class NormalizeLabels:
 
     def get(self):
         regex = r"(\w+)_\((\w+)\)(.*)"
-        result = re.findall(regex, self.label)[0]
-        print(result)
+        result = re.findall(regex, self.label)
         if not result:
             return self.label
+        result = result[0]
         return rf"${result[0]}_{{{result[1]}}}{result[2]}$"
 
 
@@ -83,7 +83,11 @@ class Plot:
 
         if self.display_labels:
             plt.text(
-                xcords[0], ycoords[0] - 1.1, label, size=text_size, color=text_color
+                xcords[0],
+                ycoords[0] - self.line_properties["width"],
+                label,
+                size=text_size,
+                color=text_color,
             )
 
     def _plot_dashed_lines(self, starting_points: List[Tuple[float, float]]):
@@ -134,18 +138,9 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("filepath", help="Absolute path to a json file which contains data")
-parser.add_argument(
-    "--vanila_plot",
-    action="store_false",
-    help="Generate a plot without labels and values",
-)
-parser.add_argument(
-    "--display_values", action="store_true", help="Display values if True"
-)
-parser.add_argument(
-    "--display_labels", action="store_true", help="Display labels if True"
-)
-parser.add_argument("--line_width", type=int, default=4, help="width of the main lines")
+parser.add_argument("--no-values", action="store_true", help="Display values if True")
+parser.add_argument("--no-labels", action="store_true", help="Display labels if True")
+parser.add_argument("--line_width", type=int, default=2, help="width of the main lines")
 parser.add_argument(
     "--dashed-line-width", type=int, default=0.5, help="width of the dashed lines"
 )
@@ -193,44 +188,41 @@ def seperate_data(data):
     return result
 
 
-def init_plt(style):
+def init_plt(style, max_, min_, yaxis_annotation: str):
+
+    plt.figure(figsize=(10, 10))
+    plt.box(False)
     plt.style.use(style)
     plt.xticks([])
-    plt.gca().axes.yaxis.set_ticklabels([])  # type: ignore
+    plt.yticks([])
+    plt.plot([-10, -10], [max_ + 2, min_ - 2])
+    plt.text(-8, max_ + 2, yaxis_annotation)
+
+
+def get_min_and_max_vals(data: Dict[str, List[float]]) -> Tuple[float, float]:
+    values = [x for y in data.values() for x in y]
+    return min(values), max(values)
 
 
 if __name__ == "__main__":
     args = parser.parse_args()
     data = read_json(args.filepath)
-
     colors: List[str] = data["colors"]
     data = data["data"]
-    init_plt(args.style)
+    min_, max_ = get_min_and_max_vals(data)
+    init_plt(args.style, max_, min_, "$\Delta$G [kcal/mol]")
     for index, data in enumerate(seperate_data(data)):
 
         line_prop = get_line_properties(args, colors, index)
         text_prop = get_text_properties(args, index, colors)
-        if args.vanila_plot:
-            print(args.vanila_plot)
-            plot = Plot(
-                data=data,  # type: ignore
-                display_labels=False,
-                display_values=False,
-                line_properties=line_prop,
-                text_properties=text_prop,
-                distance=args.distance,
-                offset=args.line_length,
-            )
-        else:
-            print(args.display_values)
-            plot = Plot(
-                data=data,  # type: ignore
-                # display_labels=args.display_labels,
-                # display_values=args.display_values,
-                line_properties=line_prop,
-                text_properties=text_prop,
-                distance=args.distance,
-                offset=args.line_length,
-            )
+        plot = Plot(
+            data=data,  # type: ignore
+            display_labels=not args.no_labels,
+            display_values=not args.no_values,
+            line_properties=line_prop,
+            text_properties=text_prop,
+            distance=args.distance,
+            offset=args.line_length,
+        )
         plot.create()
     plt.show()
