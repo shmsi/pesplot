@@ -29,10 +29,13 @@ Example input files look like:
       }
     }
 
+**Note:** To create subscripted text use notation `prefix_(subscript)_suffix`. For
+instance for L1<sub>EDA</sub> the notation would be L1_(EDA). This will make it appear
+subscripted on the plot.
 
 ## Configurations
 The following can be configured:
-* Line width width
+* Line width
 * Line color
 * Dashed line width
 * Text size
@@ -41,4 +44,8 @@ The following can be configured:
 Examples on how to configure will be given in the next section.
 
 ## Examples
+
+## Limitations
+
+
 
