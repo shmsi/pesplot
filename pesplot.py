@@ -31,6 +31,7 @@ class Plot:
         data: Dict[str, float],
         line_properties: Dict[str, str],
         text_properties: Dict[str, str],
+        max_val: float,
         display_values: bool = True,
         display_labels: bool = True,
         offset=5.0,
@@ -55,6 +56,7 @@ class Plot:
         self.offset = offset
         self.begin_at = 0  # The lines will be ploted starting at this 'x' coord.
         self.distance = distance
+        self.max_val = max_val
 
     def _plot_block(self, coord: Tuple[List[float], List[float]], label: str):
         """Plots a block
@@ -68,7 +70,7 @@ class Plot:
         if self.display_values:
             plt.text(
                 xcords[0],
-                ycoords[0] + 0.2,
+                ycoords[0] + self.max_val * 0.5 / 100,
                 str(ycoords[0]),
                 size=text_size,
                 color=text_color,
@@ -84,7 +86,8 @@ class Plot:
         if self.display_labels:
             plt.text(
                 xcords[0],
-                ycoords[0] - 2,  # - self.line_properties["width"] / 2,
+                ycoords[0]
+                - self.max_val * 3 / 100,  # - self.line_properties["width"] / 2,
                 label,
                 size=text_size,
                 color=text_color,
@@ -221,6 +224,7 @@ if __name__ == "__main__":
             display_values=not args.no_values,
             line_properties=line_prop,
             text_properties=text_prop,
+            max_val=max_,
             distance=args.distance,
             offset=args.line_length,
         )
