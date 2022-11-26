@@ -14,7 +14,6 @@ future.
 
 Example input files look like:
 
-    ```javascript
     {
       "colors": [
         "red",
@@ -29,8 +28,17 @@ Example input files look like:
         "P_(EDA)": [-9.5, -4.5]
       }
     }
-    ```
+
 
 ## Configurations
+The following can be configured:
+* Line width width
+* Line color
+* Dashed line width
+* Text size
+* Plot style
+
+Examples on how to configure will be given in the next section.
+
 ## Examples
 
