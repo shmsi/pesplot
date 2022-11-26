@@ -53,8 +53,17 @@ will always work.
 
 This will plot with default argument.
 
-* Plot with line width configured
+* Configure with line width and text size.
 
+    python data/data_one_route.json --line-width 5 --text-size 7
+
+![localImage](./img/one_route_width_txt_size.png)
+
+* Plot multiple routes
+
+   python pesplot.py data/data_four_routes.json --line_width 3 --text_size 11
+
+![localImage](./img/four_routes.png)
 ## Limitations
 
 

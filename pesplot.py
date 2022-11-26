@@ -84,7 +84,7 @@ class Plot:
         if self.display_labels:
             plt.text(
                 xcords[0],
-                ycoords[0] - self.line_properties["width"],
+                ycoords[0] - 2,  # - self.line_properties["width"] / 2,
                 label,
                 size=text_size,
                 color=text_color,
