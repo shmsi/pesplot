@@ -14,6 +14,7 @@ future.
 
 Example input files look like:
 
+    ```json
     {
       "colors": [
         "red",
@@ -28,6 +29,7 @@ Example input files look like:
         "P_(EDA)": [-9.5, -4.5]
       }
     }
+    ```
 
 ## Configurations
 ## Examples
