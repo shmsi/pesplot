@@ -14,7 +14,7 @@ future.
 
 Example input files look like:
 
-    ```json
+    ```javascript
     {
       "colors": [
         "red",
