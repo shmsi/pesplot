@@ -65,6 +65,19 @@ This will plot with default argument.
 
 ![localImage](./img/four_routes.png)
 ## Limitations
+This project is in its early development phase. Therefore there are some limitations to
+what it can do.
+
+The limitations are:
+* If data points are close to each other, it is likely that the plot will have overlapping
+text
+* The font size does not scale as image size scales.
+* Color options are provided in an input file. However it would be easier if random colors
+are assigned to routes on the plot.
+* Json format might be hard to use for many. Excel files need to be supported.
+
+## Contact
+* Drop an email to shamsi@abdullayev.net if you have feedback or would like to contribute
 
 
 
