@@ -44,6 +44,16 @@ The following can be configured:
 Examples on how to configure will be given in the next section.
 
 ## Examples
+Provide data file to the script. Provide absolute path to a data file. That way the script
+will always work.
+
+    python data/data_one_route.json
+
+![localImage](./img/default_one_route.png)
+
+This will plot with default argument.
+
+* Plot with line width configured
 
 ## Limitations
 
