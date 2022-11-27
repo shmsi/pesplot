@@ -2,6 +2,7 @@
 The purpose of this script is to plot PES (Potential Energy Surface) plots with
 variety of configurations and color options. The script is platform independent meaning
 that you should be able to use it on any machine.
+
 [![Github All Releases](https://img.shields.io/github/downloads/shmsi/pesplot/total.svg)]()
 ## Requirements
 Anyone who has Python 3 and matplotlib installed should be able to use the script.
