@@ -67,27 +67,24 @@ class Plot:
         xcords, ycoords = coord
         text_size = self.text_properties["size"]
         text_color = self.text_properties["color"]
+        line_width = float(self.line_properties["width"])
         if self.display_values:
             plt.text(
                 xcords[0],
-                ycoords[0] + self.max_val * 0.5 / 100,
+                ycoords[0] + self.max_val * 0.5 / 100 + 3 * line_width / 100,
                 str(ycoords[0]),
                 size=text_size,
                 color=text_color,
             )
 
         plt.plot(
-            xcords,
-            ycoords,
-            color=self.line_properties["color"],
-            linewidth=self.line_properties["width"],
+            xcords, ycoords, color=self.line_properties["color"], linewidth=line_width
         )
 
         if self.display_labels:
             plt.text(
                 xcords[0],
-                ycoords[0]
-                - self.max_val * 3 / 100,  # - self.line_properties["width"] / 2,
+                ycoords[0] - self.max_val * 2.5 / 100 - line_width / 100,
                 label,
                 size=text_size,
                 color=text_color,
@@ -134,8 +131,8 @@ def get_available_styles():
 
 
 parser = argparse.ArgumentParser(
-    prog="PotentialEnergySurface",
-    description="TODO",
+    prog="PES plotter",
+    description="PES (Potential Energy Surface) plotter",
     epilog=get_available_styles(),
     formatter_class=RawTextHelpFormatter,
 )
@@ -143,7 +140,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument("filepath", help="Absolute path to a json file which contains data")
 parser.add_argument("--no-values", action="store_true", help="Display values if True")
 parser.add_argument("--no-labels", action="store_true", help="Display labels if True")
-parser.add_argument("--line_width", type=int, default=2, help="width of the main lines")
+parser.add_argument("--line-width", type=int, default=2, help="width of the main lines")
 parser.add_argument(
     "--dashed-line-width", type=int, default=0.5, help="width of the dashed lines"
 )
@@ -152,7 +149,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "--text_size", type=int, default=10, help="Font size for texts on the plot"
+    "--text-size", type=int, default=10, help="Font size for texts on the plot"
 )
 parser.add_argument(
     "--distance", type=int, default=2, help="Distance betwee main lines"
@@ -193,13 +190,13 @@ def seperate_data(data):
 
 def init_plt(style, max_, min_, yaxis_annotation: str):
 
+    plt.style.use(style)
     plt.figure(figsize=(10, 10))
     plt.box(False)
-    plt.style.use(style)
     plt.xticks([])
     plt.yticks([])
-    plt.plot([-10, -10], [max_ + 2, min_ - 2])
-    plt.text(-8, max_ + 2, yaxis_annotation)
+    plt.plot([-3, -3], [max_ + 2, min_ - 2])
+    plt.text(-2.9, max_ + 2, yaxis_annotation)
 
 
 def get_min_and_max_vals(data: Dict[str, List[float]]) -> Tuple[float, float]:

@@ -61,9 +61,21 @@ This will plot with default argument.
 
 * Plot multiple routes
 
-   python pesplot.py data/data_four_routes.json --line_width 3 --text_size 11
+   python pesplot.py data/data_four_routes.json --line-width 3 --text-size 11
 
 ![localImage](./img/four_routes.png)
+
+* If you need a plot without text use arguments `--no-values` and `--no-lables`
+
+   python pesplot.py data/data_two_routes.json --line-width 10 --line-length 2 --style  classic --no-values --no-labels
+
+![LocalImage](./img/vanila_two_routes.png)
+
+## Syles
+pesplot support different matplotlib styles. To choose a specific style use argument
+`--style <STYLE_NAME>`. To use list of style use command `python pesplot.py --help` and
+scroll to the end of the page.
+
 ## Limitations
 This project is in its early development phase. Therefore there are some limitations to
 what it can do.
